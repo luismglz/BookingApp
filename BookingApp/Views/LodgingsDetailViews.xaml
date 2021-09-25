@@ -1,0 +1,116 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="BookingApp.Views.LodgingsDetailViews"
+             xmlns:triggers="clr-namespace:BookingApp.Triggers"
+             xmlns:converters="clr-namespace:BookingApp.Converters"
+             xmlns:system="clr-namespace:System;assembly=mscorlib"
+             xmlns:renders="clr-namespace:BookingApp.Renders"
+             Title="Reservation details">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Delete" Command="{Binding DeleteCommand}"/>
+        <ToolbarItem Text="Save" Command="{Binding SaveCommand}"/>
+        <ToolbarItem Text="Map" Command="{Binding MapCommand}"/>
+    </ContentPage.ToolbarItems>
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:ImageConverter x:Key="ImageConverter"/>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <ScrollView  >
+            <StackLayout Padding="20" >
+                <Label  FontSize="18">Lodging Name</Label>
+                <Entry  Text="{Binding LodgingTitle}"></Entry>
+                <Label FontSize="18">Price per Night</Label>
+                <Entry Keyboard="Numeric" Text="{Binding LodgingPrice}"></Entry>
+                <Label FontSize="18">Check In Date</Label>
+                <Entry  Text="{Binding LodgingCheckIn}"></Entry>
+                <Label FontSize="18">Check Out Date</Label>
+                <Entry  Text="{Binding LodgingCheckOut}"></Entry>
+                <Label FontSize="18" Text="Location"/>
+                <Picker 
+                    FontSize="16" 
+                    x:Name="PickerLocation" 
+                    SelectedIndexChanged="PickerLocation_SelectedIndexChanged" 
+                    SelectedItem="{Binding LodgingLocation}">
+                </Picker>
+                <Label FontSize="18" Text="Adults"/>
+                <Entry Placeholder="Adults"  Text="{Binding LodgingAdultAvailable}">
+                    <Entry.Triggers Event="TextChanged">
+                        <EventTrigger>
+                            <triggers:AdultAvailableTrigger></triggers:AdultAvailableTrigger>
+                        </EventTrigger>
+                    </Entry.Triggers>
+                </Entry>
+                <Stepper
+                Increment="1"
+                Minimum="1"
+                Maximum="3"
+                Value="{Binding LodgingAdultAvailable}"
+                    BackgroundColor="#003580" >
+                </Stepper>
+                <Label FontSize="18" Text="Kids"/>
+                <Entry Placeholder="Kids" Text="{Binding LodgingKidAvailable}">
+                    <Entry.Triggers Event="TextChanged">
+                        <EventTrigger>
+                            <triggers:KidAvailableTrigger></triggers:KidAvailableTrigger>
+                        </EventTrigger>
+                    </Entry.Triggers>
+                </Entry>
+                <Stepper
+                Increment="1"
+                Minimum="0"
+                Maximum="3"
+                Value="{Binding LodgingKidAvailable}"
+                BackgroundColor="#003580">
+                </Stepper>
+                <Label FontSize="18" Text="Category"/>
+                <Picker 
+                    FontSize="16" 
+                    x:Name="PickerCategory" 
+                    SelectedIndexChanged="PickerCategory_SelectedIndexChanged" 
+                    SelectedItem="{Binding LodgingCategory}">
+                </Picker>
+                <Label FontSize="18">Description</Label>
+                <Editor VerticalOptions="FillAndExpand" Text="{Binding LodgingDescription}"></Editor>
+                <Label FontSize="18" Text="Latitude"/>
+                <Entry Text="{Binding LodgingLatitude}"></Entry>
+                <Label FontSize="18" Text="Longitude"/>
+                <Entry 
+                    Margin="0,0,0,10" 
+                    Text="{Binding LodgingLongitude}">
+                </Entry>
+                <Button  
+                    BackgroundColor="#00487A" 
+                    CornerRadius="4" TextColor="White"
+                    FontAttributes="Bold" Text="Get coordinates" 
+                    Command="{Binding GetLocationCommand}">
+                </Button>
+                <Frame 
+                    IsClippedToBounds="True" 
+                    CornerRadius="15" Padding="0" 
+                    HasShadow="True" 
+                    BorderColor="DarkGray">
+                    <Image 
+                    Source="{Binding LodgingPicture64 , Converter={StaticResource ImageConverter}}">
+                    </Image>
+                </Frame>
+                <Button 
+                    BackgroundColor="#00487A" 
+                    CornerRadius="4" TextColor="White" 
+                    FontAttributes="Bold" 
+                    Text="Select photo" 
+                    Command="{Binding SelectPictureCommand}">
+                </Button>
+                <Button 
+                    BackgroundColor="#00487A"  
+                    CornerRadius="4" TextColor="White" 
+                    FontAttributes="Bold" 
+                    Text="Take photo" 
+                    Command="{Binding TakePictureCommand}">
+                </Button>
+            </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

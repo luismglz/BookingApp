@@ -1,0 +1,83 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="BookingApp.Views.LodgingsListView"
+             xmlns:converters="clr-namespace:BookingApp.Converters"
+             Title="Reservations List">
+    <ContentPage.ToolbarItems RequestedTheme="Dark">
+        <ToolbarItem Text="New"  Command="{Binding NewCommand}" />
+        <ToolbarItem Text="Reload" Command="{Binding LoadCommand}"/>
+    </ContentPage.ToolbarItems>
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:ImageConverter x:Key="ImageConverter"/>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <StackLayout Padding="20">
+            <RefreshView IsRefreshing="{Binding IsBusy}" Command="{Binding RefreshCommand}">
+                <CollectionView 
+                x:Name="LodgingsList"
+                ItemsSource="{Binding LodgingsList}"
+                SelectionMode="Single"
+                SelectionChangedCommand="{Binding SelectCommand}"
+                SelectedItem="{Binding LodgingSelected}">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate >
+                            <StackLayout Padding="0,0,0,17"  >
+                                <Frame CornerRadius="5" 
+                                       Padding="7"  
+                                       BorderColor="WhiteSmoke" 
+                                       HasShadow="False" 
+                                       BackgroundColor="#003580" 
+                                       OutlineColor="Transparent" 
+                                       HeightRequest="145" >
+                                    <Grid>
+                                        <Grid.ColumnDefinitions >
+                                            <ColumnDefinition Width="50"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions >
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                        </Grid.RowDefinitions>
+                                        <Frame CornerRadius="30" 
+                                           Padding="-10" 
+                                           IsClippedToBounds="True" 
+                                           Grid.RowSpan="4" 
+                                           Grid.ColumnSpan="2"
+                                           HasShadow="True" >
+                                            <Image 
+                                                VerticalOptions="Center" 
+                                                HorizontalOptions="CenterAndExpand" 
+                                                Aspect="AspectFill" 
+                                                Source="{Binding Picture, Converter={StaticResource ImageConverter}}"/>
+                                        </Frame>
+                                        <Label  
+                                        Grid.Column="2"  
+                                        Grid.Row="1"  
+                                        FontSize="15" 
+                                        Text="{Binding Title}" 
+                                        FontAttributes="Bold"/>
+                                        <Label 
+                                        Grid.Column="2" 
+                                        FontSize="18" 
+                                        Grid.Row="2" 
+                                        Text="{Binding Location}"/>
+                                        <Label 
+                                        Margin="0,0,0,8" 
+                                        FontSize="13" 
+                                        Grid.Column="2" 
+                                        Grid.Row="3" 
+                                        Text="{Binding Price, StringFormat=' Starting from: {0} USD/night'}"/>
+                                    </Grid>
+                                </Frame>
+                            </StackLayout>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </RefreshView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

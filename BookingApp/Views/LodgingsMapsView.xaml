@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:maps="clr-namespace:Xamarin.Forms.Maps;assembly=Xamarin.Forms.Maps"
+             x:Class="BookingApp.Views.LodgingsMapsView"
+             xmlns:renders="clr-namespace:BookingApp.Renders"
+             Title="Place Location">
+    <ContentPage.Content>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="4*"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>
+            <renders:MyMap x:Name="MapLodgings" Grid.RowSpan="3"/>
+            <BoxView Grid.Row="1" BackgroundColor="#003580" Opacity=".5" CornerRadius="30"/>
+            <StackLayout Padding="10" Grid.Row="1">
+                <Label FontSize="25" x:Name="LodgingTitle" HorizontalOptions="Center"></Label>
+                <Label FontSize="20" x:Name="LodgingPrice" HorizontalOptions="Center"></Label>
+                <Label x:Name="LodgingLocation" HorizontalOptions="Center"></Label>
+            </StackLayout>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>
